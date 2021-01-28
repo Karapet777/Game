@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+
+import Button from "./components/button/Button";
+import Layout from "./components/layout/Layout";
+import StartPage from "./container/start/StartPage";
+import Game from "./container/game/Game";
+
+import "./App.scss";
 
 function App() {
+  const [View, setView] = useState(true);
+
+  const handlerViewPage = () => setView(false);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Layout>
+        {View ? (
+          <StartPage>
+            <Button
+              onClick={handlerViewPage}
+              className="app-Start-Page__btn-start"
+              title="Start"
+            />
+          </StartPage>
+        ) : (
+          <Game />
+        )}
+      </Layout>
     </div>
   );
 }

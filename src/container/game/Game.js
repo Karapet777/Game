@@ -4,152 +4,58 @@ import Button from "../../components/button/Button";
 import Paper from "../../assets/icons/paper-icon";
 import Rock from "../../assets/icons/rock-icon";
 import Scissors from "../../assets/icons/scissors-icon";
+import StartGamePage from "../../container/startGamePage/StartGamePage";
+import EndGamePage from "../../container/endGamePage/EndGamePage";
 
 import "./Game.scss";
 
-class Game extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      score: 0,
-      timer: 3,
-      gameОptions: true,
-      autoVariant: Math.ceil(Math.random() * 3),
-      p1: false,
-      p2: false,
-      p3: false,
+const instate = {
+  timer: 5,
+  gameОptions: true,
+  autoVariant: Math.ceil(Math.random() * 3),
+  p1: false,
+  usPaper: false,
+  usRock: false,
+  usScissors: false,
+};
 
-      my1: false,
-      my2: false,
-      my3: false,
-    };
-  }
+class Game extends Component {
+  state = {
+    score: 0,
+    ...instate,
+  };
 
   restartHandler = () => {
-    if (this.state.my1 === true && this.state.autoVariant === 3) {
+    if (
+      (this.state.usPaper && this.state.autoVariant === 3) ||
+      (this.state.usRock && this.state.autoVariant === 1) ||
+      (this.state.usScissors && this.state.autoVariant === 2)
+    ) {
       this.setState({
         score: this.state.score - 1,
-        timer: 3,
-        gameОptions: true,
-        autoVariant: Math.ceil(Math.random() * 3),
-        p1: false,
-        p2: false,
-        p3: false,
-        my1: false,
-        my2: false,
-        my3: false,
+        ...instate,
       });
     }
-    if (this.state.my2 && this.state.autoVariant === 1) {
-      this.setState({
-        score: this.state.score - 1,
-        timer: 3,
-        gameОptions: true,
-        autoVariant: Math.ceil(Math.random() * 3),
-        p1: false,
-        p2: false,
-        p3: false,
-        my1: false,
-        my2: false,
-        my3: false,
-      });
-    }
-    if (this.state.my3 && this.state.autoVariant === 2) {
-      this.setState({
-        score: this.state.score - 1,
-        timer: 3,
-        gameОptions: true,
-        autoVariant: Math.ceil(Math.random() * 3),
-        p1: false,
-        p2: false,
-        p3: false,
-        my1: false,
-        my2: false,
-        my3: false,
-      });
-    }
-    if (this.state.my3 === true && this.state.autoVariant === 1) {
+
+    if (
+      (this.state.usScissors && this.state.autoVariant === 1) ||
+      (this.state.usPaper && this.state.autoVariant === 2) ||
+      (this.state.usRock && this.state.autoVariant === 3)
+    ) {
       this.setState({
         score: this.state.score + 1,
-        timer: 3,
-        gameОptions: true,
-        autoVariant: Math.ceil(Math.random() * 3),
-        p1: false,
-        p2: false,
-        p3: false,
-        my1: false,
-        my2: false,
-        my3: false,
+        ...instate,
       });
     }
-    if (this.state.my1 && this.state.autoVariant === 2) {
-      this.setState({
-        score: this.state.score + 1,
-        timer: 3,
-        gameОptions: true,
-        autoVariant: Math.ceil(Math.random() * 3),
-        p1: false,
-        p2: false,
-        p3: false,
-        my1: false,
-        my2: false,
-        my3: false,
-      });
-    }
-    if (this.state.my2 && this.state.autoVariant === 3) {
-      this.setState({
-        score: this.state.score + 1,
-        timer: 3,
-        gameОptions: true,
-        autoVariant: Math.ceil(Math.random() * 3),
-        p1: false,
-        p2: false,
-        p3: false,
-        my1: false,
-        my2: false,
-        my3: false,
-      });
-    }
-    if (this.state.my1 && this.state.autoVariant === 1) {
+
+    if (
+      (this.state.usPaper && this.state.autoVariant === 1) ||
+      (this.state.usRock && this.state.autoVariant === 2) ||
+      (this.state.usScissors && this.state.autoVariant === 3)
+    ) {
       this.setState({
         score: this.state.score,
-        timer: 3,
-        gameОptions: true,
-        autoVariant: Math.ceil(Math.random() * 3),
-        p1: false,
-        p2: false,
-        p3: false,
-        my1: false,
-        my2: false,
-        my3: false,
-      });
-    }
-    if (this.state.my2 && this.state.autoVariant === 2) {
-      this.setState({
-        score: this.state.score,
-        timer: 3,
-        gameОptions: true,
-        autoVariant: Math.ceil(Math.random() * 3),
-        p1: false,
-        p2: false,
-        p3: false,
-        my1: false,
-        my2: false,
-        my3: false,
-      });
-    }
-    if (this.state.my3 && this.state.autoVariant === 3) {
-      this.setState({
-        score: this.state.score,
-        timer: 3,
-        gameОptions: true,
-        autoVariant: Math.ceil(Math.random() * 3),
-        p1: false,
-        p2: false,
-        p3: false,
-        my1: false,
-        my2: false,
-        my3: false,
+        ...instate,
       });
     }
   };
@@ -162,18 +68,15 @@ class Game extends Component {
       if (this.state.timer === 1) {
         this.setState({
           p1: true,
-          p2: true,
-          p3: true,
-          my1: true,
-          my2: false,
-          my3: false,
+          autoVariant: Math.ceil(Math.random() * 3),
         });
         clearInterval(intervalID);
       }
       this.setState({
         timer: this.state.timer - 1,
       });
-    }, 400);
+    }, 200);
+    this.setState({ usPaper: true });
   };
 
   RockGame = () => {
@@ -184,18 +87,15 @@ class Game extends Component {
       if (this.state.timer === 1) {
         this.setState({
           p1: true,
-          p2: true,
-          p3: true,
-          my1: false,
-          my2: true,
-          my3: false,
+          autoVariant: Math.ceil(Math.random() * 3),
         });
         clearInterval(intervalID);
       }
       this.setState({
         timer: this.state.timer - 1,
       });
-    }, 400);
+    }, 200);
+    this.setState({ usRock: true });
   };
 
   ScissorsGame = () => {
@@ -206,67 +106,38 @@ class Game extends Component {
       if (this.state.timer === 1) {
         this.setState({
           p1: true,
-          p2: true,
-          p3: true,
-          my1: false,
-          my2: false,
-          my3: true,
+          autoVariant: Math.ceil(Math.random() * 3),
         });
         clearInterval(intervalID);
       }
       this.setState({
         timer: this.state.timer - 1,
       });
-    }, 400);
+    }, 200);
+    this.setState({ usScissors: true });
   };
 
   render() {
-    let a = () => {
+    let userChoice = () => {
+      if (this.state.usPaper) {
+        return <Paper />;
+      } else if (this.state.usRock) {
+        return <Rock />;
+      } else if (this.state.usScissors) {
+        return <Scissors />;
+      }
+    };
+    let randomChoince = () => {
       if (this.state.p1 && this.state.autoVariant === 1) {
         return <Paper />;
-      } else if (this.state.p2 && this.state.autoVariant === 2) {
+      } else if (this.state.p1 && this.state.autoVariant === 2) {
         return <Rock />;
-      } else if (this.state.p3 && this.state.autoVariant === 3) {
+      } else if (this.state.p1 && this.state.autoVariant === 3) {
         return <Scissors />;
       } else {
         return this.state.timer;
       }
     };
-    let b = () => {
-      if (this.state.my1) {
-        return <Paper />;
-      } else if (this.state.my2) {
-        return <Rock />;
-      } else if (this.state.my3) {
-        return <Scissors />;
-      }
-    };
-    const startGame = (
-      <>
-        <Button
-          onClick={this.PaperGame}
-          className="block-game__paper"
-          title={<Paper />}
-        />
-        <Button
-          onClick={this.RockGame}
-          className="block-game__Rock"
-          title={<Rock />}
-        />
-        <Button
-          onClick={this.ScissorsGame}
-          className="block-game__Scissors"
-          title={<Scissors />}
-        />
-      </>
-    );
-    const endGame = (
-      <>
-        <Button className="block-game__paper" title={b()} />
-        <Button className="block-game__Rock" title={a()} />
-      </>
-    );
-
     return (
       <div className="app-game-container">
         <div className="app-game-container__block-score">
@@ -279,7 +150,7 @@ class Game extends Component {
             <Button
               className="app-btn-restart"
               onClick={this.restartHandler}
-              title="Restart"
+              title="New"
             />
           </div>
           <div className="app-game-container__block-score__item">
@@ -288,7 +159,26 @@ class Game extends Component {
           </div>
         </div>
         <div className="block-game">
-          {this.state.gameОptions ? startGame : endGame}
+          {this.state.gameОptions ? (
+            <StartGamePage
+              onClick1={this.PaperGame}
+              className1="block-game__paper"
+              title1={<Paper />}
+              onClick2={this.RockGame}
+              className2="block-game__Rock"
+              title2={<Rock />}
+              onClick3={this.ScissorsGame}
+              className3="block-game__Scissors"
+              title3={<Scissors />}
+            />
+          ) : (
+            <EndGamePage
+              className1="block-game__paper"
+              className2="block-game__Rock"
+              title1={userChoice()}
+              title2={randomChoince()}
+            />
+          )}
         </div>
       </div>
     );

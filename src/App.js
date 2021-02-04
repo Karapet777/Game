@@ -1,29 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 
-import Layout from "./components/layout/Layout";
-import HomePage from "./container/home/HomePage";
-import Game from "./container/game/Game";
+import Game from "./containers/game/Game";
+import Layout from "./comonents/layout/Layout";
 
-import "./App.scss";
-
-function App() {
-  const [View, setView] = useState(true);
-  const handlerViewPage = () => setView(false);
-
+const App = () => {
   return (
-    <div className="App">
+    <div>
       <Layout>
-        {View ? (
-          <HomePage
-            onClick={handlerViewPage}
-            className="app-Start-Page__btn-start"
-          />
-        ) : (
-          <Game />
-        )}
+        <Game />
       </Layout>
     </div>
   );
-}
+};
 
 export default App;

@@ -4,8 +4,8 @@ import "./Layout.scss";
 
 const Layout = ({ children }) => {
   return (
-    <div>
-      <main className="app-layout-content">{children}</main>
+    <div className="app-layout-container">
+      <main className="app-layout-container__main">{children}</main>
     </div>
   );
 };
